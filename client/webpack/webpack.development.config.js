@@ -18,6 +18,7 @@ export default new Config().extend('webpack/webpack.base.config.js').merge({
         proxy: {
             '/api': 'http://localhost:4000'
         },
+        historyApiFallback: true,
         hot: true,
         inline: true,
         noInfo: true,
