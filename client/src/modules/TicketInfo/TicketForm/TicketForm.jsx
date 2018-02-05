@@ -48,7 +48,12 @@ export default class TicketForm extends Component
                     <Form.Select label="Выберите услугу" options={this._getServices()} onChange={(e, options) => this.setState({ choosedService: options.value })} />
                     <Button color="orange" onClick={this._addToQueue}>Встать в очередь</Button>
                 </Form>
-                <div>Самое продуктивное окно: {this.state.window.id}, среднее время на клиента: {this.state.window.time / this.state.window.countClients}</div>
+                {
+                    this.state.window ?
+                    <div>Самое продуктивное окно: {this.state.window.id}, среднее время на клиента: {this.state.window.time / this.state.window.countClients}</div>
+                     : null 
+                }
+                
             </div>
         );
     }
