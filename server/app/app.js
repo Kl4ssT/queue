@@ -60,8 +60,8 @@ io.on('connection', (client) => {
         client.emit('updateTable', await getTable());
     });
 
-    client.on('stopWork', async (window) => {
-        const window = await models.windows.findById(window);
+    client.on('stopWork', async (windowId) => {
+        const window = await models.windows.findById(windowId);
         const currentTime = Date.parse(new Date());
 
         const diffDate = Math.abs(currentTime - window.lastStart);
