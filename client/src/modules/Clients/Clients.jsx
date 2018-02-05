@@ -29,7 +29,7 @@ export default class Clients extends Component {
     };
 
     _stopWork = () => {
-        api.emit('stopWork');
+        api.emit('stopWork', this.props.window.id);
     };
 
     render()
