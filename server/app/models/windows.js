@@ -8,7 +8,18 @@ export default (sequelize, DataTypes) => {
        id_ticket: {
            type: DataTypes.INTEGER,
            allowNull: true
-       }
+       },
+       time: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+       },
+       lastStart: {
+        type: DataTypes.INTEGER
+       },
+       countClients: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+       },
    }, {
        timestamps: false
    });

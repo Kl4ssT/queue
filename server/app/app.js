@@ -47,13 +47,31 @@ io.on('connection', (client) => {
         const ticket = await models.tickets.findById(data.ticket);
         const window = await models.windows.findById(data.window);
 
-        await window.update({ id_ticket: ticket.id });
+        const currentTime = Date.parse(new Date());
+
+        const diffDate = Math.abs(currentTime - window.lastStart);
+
+        await window.update({ id_ticket: ticket.id, lastStart: Date.parse(new Date()), countClients: window.coutnClients + 1, time: window.time + diffDate });
         client.emit('settedTicket', ticket);
         io.sockets.emit('updateTable', await getTable());
     });
 
     client.on('getTable', async () => {
         client.emit('updateTable', await getTable());
+    });
+
+    client.on('stopWork', async (window) => {
+        const window = await models.windows.findById(window);
+        const currentTime = Date.parse(new Date());
+
+        const diffDate = Math.abs(currentTime - window.lastStart);
+        await window.update({ time: window.time + diffDate, id_ticket: null });
+        client.emit('stopped');
+    });
+
+    client.on('getWindow', () => {
+        const window = await models.windows.findOne({ order: time });
+        client.emit('window', window);
     });
 });
 

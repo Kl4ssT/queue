@@ -7,13 +7,19 @@ export default class TicketForm extends Component
     state = {
         name: '',
         services: [],
-        choosedService: null
+        choosedService: null,
+        window: null
     };
 
     componentDidMount()
     {
         api.emit('getServices');
         api.on('services', (services) => this.setState({ services }));
+
+        api.emit('getWindow');
+        api.on('window', (window) => {
+            this.setState({ window: window })
+        });
     }
 
     _getServices = () => {
@@ -42,6 +48,7 @@ export default class TicketForm extends Component
                     <Form.Select label="Выберите услугу" options={this._getServices()} onChange={(e, options) => this.setState({ choosedService: options.value })} />
                     <Button color="orange" onClick={this._addToQueue}>Встать в очередь</Button>
                 </Form>
+                <div>Самое продуктивное окно: {this.state.window.id}, среднее время на клиента: {this.state.window.time / this.state.window.countClients}</div>
             </div>
         );
     }

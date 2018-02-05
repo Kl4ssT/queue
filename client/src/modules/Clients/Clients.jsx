@@ -28,6 +28,10 @@ export default class Clients extends Component {
         api.emit('setTicket', { ticket: ticket, window: this.props.window });
     };
 
+    _stopWork = () => {
+        api.emit('stopWork');
+    };
+
     render()
     {
         return (
@@ -39,6 +43,7 @@ export default class Clients extends Component {
                             <Button primary={item.active} key={index} onClick={() => this._setTicket(item.id)}>Билет { item.id }</Button>
                         ))}
                     </Button.Group>
+                    <Button onClick={this._stopWork}>Остановить работу</Button>
                 </Modal.Content>
             </Modal>
         );
