@@ -13,6 +13,8 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         }
+    }, {
+        timestamps: false
     });
 
     return Tickets;

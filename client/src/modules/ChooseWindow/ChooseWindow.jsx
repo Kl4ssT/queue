@@ -1,22 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Modal, Button } from 'semantic-ui-react';
+import api from '../../api';
 
-const ChooseWindow = (props) => {
-	return (
-		<Modal dimmer="blurring" open={props.opened}>
-			<Modal.Header>Занять окно</Modal.Header>
-			<Modal.Content>
-				<Button.Group>
-					<Button>Окно #1</Button>
-					<Button>Окно #2</Button>
-					<Button>Окно #3</Button>
-					<Button>Окно #4</Button>
-					<Button>Окно #5</Button>
-					<Button>Окно #6</Button>
-				</Button.Group>
-			</Modal.Content>
-		</Modal>
-	);
-};
+export default class ChooseWindow extends Component
+{
+	state = {
+		windows: []
+	};
 
-export default ChooseWindow;
+	componentDidMount()
+	{
+		api.emit('getWindows');
+		api.on('windows', (windows) => {
+			this.setState({ windows });
+		})
+	}
+
+	_setWindow = (id) => {
+		api.emit('setWindow', id);
+	};
+
+	render()
+	{
+        return (
+            <Modal dimmer="blurring" open={this.props.opened}>
+                <Modal.Header>Занять окно</Modal.Header>
+                <Modal.Content>
+                    <Button.Group>
+						{this.state.windows.map((item, index) => (
+                            <Button key={index} onClick={() => this.props.setWindow(item.id)}>Окно #{item.id}</Button>
+						))}
+                    </Button.Group>
+                </Modal.Content>
+            </Modal>
+        );
+	}
+
+}

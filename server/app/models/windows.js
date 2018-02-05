@@ -5,14 +5,12 @@ export default (sequelize, DataTypes) => {
            autoIncrement: true,
            primaryKey: true
        },
-       id_staff: {
-           type: DataTypes.INTEGER,
-           allowNull: true
-       },
        id_ticket: {
            type: DataTypes.INTEGER,
            allowNull: true
        }
+   }, {
+       timestamps: false
    });
 
    return Windows;

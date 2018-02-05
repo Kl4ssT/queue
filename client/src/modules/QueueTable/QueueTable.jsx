@@ -1,31 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Segment, Header, Divider, Table } from 'semantic-ui-react';
+import api from "../../api";
 
-const QueueTable = (props) => {
-    return (
-        <Segment>
-            <Header as='h2'>Табло очереди</Header>
-            <Divider horizontal={true} />
-            <Table celled striped>
-                <Table.Header>
-                    <Table.Row>
-                        <Table.HeaderCell>Окно</Table.HeaderCell>
-                        <Table.HeaderCell>Билет</Table.HeaderCell>
-                    </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                    <Table.Row>
-                        <Table.Cell>Окно #1</Table.Cell>
-                        <Table.Cell>В151</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell>Окно #2</Table.Cell>
-                        <Table.Cell>А164</Table.Cell>
-                    </Table.Row>
-                </Table.Body>
-            </Table>
-        </Segment>
-    );
-};
+export default class QueueTable extends Component
+{
+    state = {
+        table: []
+    };
 
-export default QueueTable;
+    componentDidMount()
+    {
+        api.emit('getTable');
+        api.on('updateTable', (table) => this.setState({ table }));
+    }
+
+    render()
+    {
+        const table = this.state.table.map((item, index) => (
+            <Table.Row key={index}>
+                <Table.Cell>Окно #{item.window}</Table.Cell>
+                <Table.Cell>{item.ticket}</Table.Cell>
+            </Table.Row>
+        ));
+
+        return (
+            <Segment>
+                <Header as='h2'>Табло очереди</Header>
+                <Divider horizontal={true} />
+                <Table celled striped>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Окно</Table.HeaderCell>
+                            <Table.HeaderCell>Билет</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {table}
+                    </Table.Body>
+                </Table>
+            </Segment>
+        );
+    }
+}

@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Segment, Header, Form } from 'semantic-ui-react';
-import TicketForm from './TicketForm';
+import TicketNumber from './TicketNumber';
+import api from "../../api";
+import TicketForm from "./TicketForm";
 
-const TicketInfo = (props) => {
-    return (
-        <Segment>
-            <TicketForm />
-        </Segment>
-    );
-};
+export default class TicketInfo extends Component
+{
+    componentDidMount()
+    {
 
-export default TicketInfo;
+    }
+
+    render()
+    {
+        return (
+            <Segment>
+                { this.props.user ? <TicketNumber ticket={this.props.user.ticket} /> : <TicketForm /> }
+            </Segment>
+        );
+    }
+}

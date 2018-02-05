@@ -15,6 +15,8 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         }
+    }, {
+        timestamps: false
     });
 
     return Services;

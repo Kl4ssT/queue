@@ -36,7 +36,10 @@ const DB = {
     dialect: process.env.DIALECT || config.get('db.dialect')
 };
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 export {
     PORT,
-    DB
+    DB,
+    JWT_SECRET
 };
