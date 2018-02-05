@@ -70,7 +70,7 @@ io.on('connection', (client) => {
     });
 
     client.on('getWindow', async () => {
-        const window = await models.windows.findOne({ order: time });
+        const window = await models.windows.findOne({ order: ['time', 'DESC'] });
         client.emit('window', window);
     });
 });
