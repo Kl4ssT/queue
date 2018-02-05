@@ -69,7 +69,7 @@ io.on('connection', (client) => {
         client.emit('stopped');
     });
 
-    client.on('getWindow', () => {
+    client.on('getWindow', async () => {
         const window = await models.windows.findOne({ order: time });
         client.emit('window', window);
     });
