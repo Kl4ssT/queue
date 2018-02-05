@@ -51,7 +51,12 @@ io.on('connection', (client) => {
 
         const diffDate = Math.abs(currentTime - window.lastStart);
 
-        await window.update({ id_ticket: ticket.id, lastStart: Date.parse(new Date()), countClients: window.coutnClients + 1, time: window.time + diffDate });
+        await window.update({
+            id_ticket: ticket.id,
+            lastStart: Date.parse(new Date()),
+            countClients: window.countClients + 1,
+            time: window.time + diffDate
+        });
         client.emit('settedTicket', ticket);
         io.sockets.emit('updateTable', await getTable());
     });
